@@ -351,6 +351,8 @@ func parseInterfaceInfo(profile *HostProfileSpec, host v1info.HostInfo) error {
 		data.DataNetworks = &dataNetList
 
 		data.PTPRole = iface.PTPRole
+		data.MaxTxRate = iface.MaxTxRate
+		data.MaxRxRate = iface.MaxRxRate
 
 		dataPtpInterfaceList := host.FindPTPInterfaceNameByInterface(iface)
 		dataPtpInterfaces := StringsToPtpInterfaceItemList(dataPtpInterfaceList)
@@ -411,10 +413,9 @@ func parseInterfaceInfo(profile *HostProfileSpec, host v1info.HostInfo) error {
 		case interfaces.IFTypeVF:
 
 			vf := VFInfo{
-				VFCount:   *iface.VFCount,
-				Lower:     iface.Uses[0],
-				VFDriver:  iface.VFDriver,
-				MaxTxRate: iface.MaxTxRate}
+				VFCount:  *iface.VFCount,
+				Lower:    iface.Uses[0],
+				VFDriver: iface.VFDriver}
 			vf.CommonInterfaceInfo = data
 			vfs = append(vfs, vf)
 		}
